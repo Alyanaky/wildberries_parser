@@ -41,30 +41,7 @@ python manage.py migrate
 Создайте суперпользователя (для доступа к админ-панели):
 python manage.py createsuperuser
 
-
-
-Структура проекта
-wildberries_parser/
-├── manage.py              # Управление Django-проектом
-├── requirements.txt       # Зависимости проекта
-├── wildberries_parser/    # Основное приложение Django
-│   ├── __init__.py
-│   ├── settings.py       # Настройки проекта
-│   ├── urls.py           # Главные маршруты
-│   ├── wsgi.py           # WSGI-конфигурация
-├── parser/               # Приложение для парсинга и API
-│   ├── __init__.py
-│   ├── admin.py          # Настройки админ-панели
-│   ├── apps.py           # Конфигурация приложения
-│   ├── migrations/       # Миграции базы данных
-│   ├── models.py         # Модель Product
-│   ├── serializers.py    # Сериализатор для API
-│   ├── urls.py           # Маршруты API
-│   ├── views.py          # Представления API
-│   ├── parser_script.py  # Скрипт парсинга
-
 Использование
-Запуск парсера
 
 Запустите скрипт парсинга:
 python parser/parser_script.py
@@ -76,9 +53,7 @@ python parser/parser_script.py
 
 Запуск сервера
 
-Запустите Django-сервер:
 python manage.py runserver
-
 
 API доступен по адресу: http://127.0.0.1:8000/api/products/
 
@@ -111,32 +86,7 @@ curl "http://127.0.0.1:8000/api/products/?min_price=1000&max_price=10000&min_rat
 Причина: Wildberries блокирует запросы из-за антибот-защиты.
 Решение:
 Проверьте сайт в браузере (https://www.wildberries.ru/catalog/0/search.aspx?search=смартфоны).
-Используйте прокси в parser_script.py (см. комментарии в коде).
-Добавьте поддержку решения CAPTCHA через сервисы, такие как 2Captcha.
-Убедитесь, что заголовки и User-Agent актуальны.
 
-
-
-
-Нет товаров на странице:
-
-Причина: CSS-классы на сайте Wildberries могли измениться.
-Решение: Откройте страницу в браузере, используйте "Инспектор элементов" и обновите классы в parser_script.py (product-card, goods-name, и т.д.).
-
-
-Ошибка импорта в parser_script.py:
-
-Причина: Неправильный запуск скрипта вне контекста Django.
-Решение: Запускайте скрипт через python parser/parser_script.py или через python manage.py shell.
-
-
-
-Дополнительные рекомендации
-
-Для продакшена замените SECRET_KEY в settings.py и установите DEBUG = False.
-Используйте PostgreSQL вместо SQLite для больших объемов данных.
-Для частого парсинга рассмотрите платные прокси-сервисы и сервисы обхода CAPTCHA (например, 2Captcha).
-Регулярно проверяйте актуальность CSS-классов, так как структура сайта Wildberries может меняться.
 
 Лицензия
 MIT License
